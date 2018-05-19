@@ -76,5 +76,5 @@ MongoClient.connect(db_config.dbUrl, (err, database) => {
 });
 
 app.listen(8001, () => {
-  console.log('server has started @port 3000');
+  console.log('server has started @port 8001');
 });
