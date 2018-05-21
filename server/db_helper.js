@@ -25,6 +25,23 @@ db_helper.getAllCategories = (categoreisCollection, callback) => {
   });
 }
 
+db_helper.saveUserData = (userData, userCollection, callback) => {
+
+  if (cq_utils.isUserDataValid(userData)) {
+    userData.password = cq_utils.generatePasswordHash(userData.password);
+    userCollection.insertOne(userData, (err, results) => {
+      if (!err) {
+        callback(null, userData);
+      } else {
+        callback('error', {});
+      }
+    })
+  } else {
+    callback('error', {});
+  }
+
+}
+
 db_helper.getUserDetails = (userId, userCollection, callback) => {
   if (cq_utils.isUserIdValid(userId)) {
     userCollection.findOne({
@@ -39,6 +56,8 @@ db_helper.getUserDetails = (userId, userCollection, callback) => {
       }
     })
   } else {
-    callback({error:'userId is not valid'}, {});
+    callback({
+      error: 'userId is not valid'
+    }, {});
   }
 }

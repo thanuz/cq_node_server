@@ -17,7 +17,7 @@ let state = {
 };
 
 app.get('/', (req, res) => {
-  res.send('Welcome to careerquo API');
+  return res.send('Welcome to careerquo API');
 });
 
 app.get('/users', (req, res) => {
@@ -25,9 +25,9 @@ app.get('/users', (req, res) => {
   let userCollection = cq_utils.getUserCollection(state.db);
   db_helper.getAllUsers(userCollection, (err, records) => {
     if (!err)
-      res.json(records);
+      return res.json(records);
     else {
-      res.sendStatus(500)
+      return res.sendStatus(500)
     }
   });
 });
@@ -37,9 +37,9 @@ app.get('/categories', (req, res) => {
   let categoreisCollection = cq_utils.getCategoriesCollection(state.db);
   db_helper.getAllCategories(categoreisCollection, (err, records) => {
     if (!err)
-      res.json(records);
+      return res.json(records);
     else {
-      res.sendStatus(500)
+      return res.sendStatus(500)
     }
   })
 });
@@ -49,19 +49,26 @@ app.get('/users/:userId', (req, res) => {
   let userCollection = cq_utils.getUserCollection(state.db);
   db_helper.getUserDetails(params.userId, userCollection, (err, record) => {
     if (!err)
-      res.json(record);
+      return res.json(record);
     else {
-      res.sendStatus(401);
+      return res.sendStatus(401);
     }
   })
 });
 
 app.post('/user', jsonParser, (req, res) => {
-
   if (_.isEmpty(req.body)) {
     return res.sendStatus(400);
   } else {
-    res.json(req.body);
+    let userCollection = cq_utils.getUserCollection(state.db);
+    db_helper.saveUserData(req.body, userCollection, (err, record) => {
+      if (!err) {
+        return res.json(record);
+      } else {
+        return res.sendStatus(400);
+      }
+    })
+
   }
 })
 
