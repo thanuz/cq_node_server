@@ -10,12 +10,7 @@ cq_utlis.isUserIdValid = (userId) => {
 }
 
 cq_utlis.isUserDataValid = (userData) => {
-
-  if (cq_utlis.hasAllParams(userData)) {
-    return true;
-    //return /^[A-F]{1,10}$/i.test(userData.firstName);
-  }
-  return false;
+  return cq_utlis.hasAllParams(userData);
 }
 
 cq_utlis.getUserCollection = (db) => {
