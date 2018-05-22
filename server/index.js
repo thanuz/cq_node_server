@@ -63,7 +63,8 @@ app.post('/user', jsonParser, (req, res) => {
     let userCollection = cq_utils.getUserCollection(state.db);
     db_helper.saveUserData(req.body, userCollection, (err, record) => {
       if (!err) {
-        return res.json(record);
+        let token = cq_utils.generateToken(record)
+        return res.json({token});
       } else {
         return res.sendStatus(400);
       }

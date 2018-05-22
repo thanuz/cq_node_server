@@ -1,5 +1,6 @@
 let _ = require('lodash');
 var bcrypt = require('bcrypt');
+let jwt = require('jsonwebtoken');
 
 let db_config = require('./db_config');
 let cq_utlis = module.exports = {};
@@ -27,4 +28,18 @@ cq_utlis.generatePasswordHash = (password) => {
 
 cq_utlis.hasAllParams = (userData) => {
   return (_.get(userData, 'firstName') && _.get(userData, 'lastName') && _.get(userData, 'password'));
+}
+cq_utlis.generateToken = ({
+  firstName,
+  lastName,
+  email
+}) => {
+  let user = {
+    firstName,
+    lastName,
+    email
+  };
+  let token = jwt.sign({user},'cq_jwt_secret_key');
+  return token;
+
 }
