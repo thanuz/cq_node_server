@@ -61,3 +61,17 @@ db_helper.getUserDetails = (userId, userCollection, callback) => {
     }, {});
   }
 }
+
+db_helper.getUserDetailsByEmail = (email, userCollection, callback) => {
+  userCollection.findOne({
+    email
+  }, (err, record) => {
+    if (!err && record) {
+      callback(null, record);
+    } else {
+      callback({
+        error: 'user not found'
+      }, {});
+    }
+  })
+}

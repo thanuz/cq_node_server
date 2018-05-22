@@ -5,4 +5,7 @@ db_config.collections = {
   userCollectionName: 'users',
   categoriesCollectionName: 'categories'
 }
+db_config.state = {
+  db:null
+}
 

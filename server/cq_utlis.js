@@ -29,6 +29,8 @@ cq_utlis.generatePasswordHash = (password) => {
 cq_utlis.hasAllParams = (userData) => {
   return (_.get(userData, 'firstName') && _.get(userData, 'lastName') && _.get(userData, 'password'));
 }
+
+
 cq_utlis.generateToken = ({
   firstName,
   lastName,
@@ -39,7 +41,10 @@ cq_utlis.generateToken = ({
     lastName,
     email
   };
-  let token = jwt.sign({user},'cq_jwt_secret_key');
+  let token = jwt.sign({
+    user
+  }, 'cq_jwt_secret_key');
   return token;
 
 }
+
