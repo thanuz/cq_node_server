@@ -10,11 +10,11 @@ let cq_token_utlis = require('./cq_token_utlis');
 let app = express();
 let jsonParser = bodyParser.json()
 
-app.get('/', (req, res) => {
+app.get('/api', (req, res) => {
   return res.send('Welcome to careerquo API');
 });
 
-app.get('/users', (req, res) => {
+app.get('/api/users', (req, res) => {
   let users = [];
   let userCollection = cq_utils.getUserCollection(db_config.state.db);
   db_helper.getAllUsers(userCollection, (err, records) => {
