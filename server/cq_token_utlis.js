@@ -39,7 +39,6 @@ cq_token_utlis.verifyToken = (token, callbck) => {
       db_helper.getUserDetailsByEmail(email, userCollection, (err, record) => {
         if (!err && record) {
           callbck(null, true)
-
         } else {
           callbck('err', false)
         }

@@ -7,13 +7,8 @@ const MongoClient = require('mongodb').MongoClient;
 let db_config = require('./db_config');
 let cq_token_utlis = require('./cq_token_utlis');
 
-
-
 let app = express();
-
 let jsonParser = bodyParser.json()
-
-
 
 app.get('/', (req, res) => {
   return res.send('Welcome to careerquo API');
@@ -55,7 +50,23 @@ app.get('/users/:userId', cq_token_utlis.verifyUser, (req, res) => {
   })
 });
 
-app.post('/user', jsonParser, (req, res) => {
+app.get('/user/check', (req, res) => {
+  const query = req.query;
+  let userCollection = cq_utils.getUserCollection(db_config.state.db);
+  db_helper.getUserDetailsByEmail(query.email, userCollection, (err, record) => {
+    if (!err) {
+      return res.json({
+        user_exists: true
+      })
+    } else {
+      return res.json({
+        user_exists: false
+      })
+    }
+  })
+})
+
+app.post('/signup', jsonParser, (req, res) => {
   if (_.isEmpty(req.body)) {
     return res.sendStatus(400);
   } else {
